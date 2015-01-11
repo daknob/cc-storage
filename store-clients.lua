@@ -1,0 +1,22 @@
+clients = {
+	"store1.csd.gr",
+	"store2.csd.gr",
+	"store3.csd.gr",
+	"store4.csd.gr",
+	"store5.csd.gr",
+	"store6.csd.gr",
+	"store7.csd.gr",
+	"store8.csd.gr",
+	"store9.csd.gr",
+	"store10.csd.gr",
+	"store11.csd.gr",
+	"store12.csd.gr",
+	"store13.csd.gr",
+	"store14.csd.gr",
+	"store15.csd.gr",
+	"store16.csd.gr",
+	"store17.csd.gr",
+	"store18.csd.gr",
+	"store19.csd.gr",
+	"store20.csd.gr"
+}
