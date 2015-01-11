@@ -3,3 +3,7 @@ rednet.open("bottom")
 
 --[ Load a whitelist for queries ]--
 --dofile("/whitelist")
+
+--[ Variables ]--
+DNSIP = 127 --Set to 0 for autodiscovery--
+FQDN = "storage.csd.gr"
