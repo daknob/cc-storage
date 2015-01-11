@@ -68,6 +68,34 @@ function dnsResolve(hostname)
 	end
 end
 
+function pingWorker(wrk)
+	rednet.send(wrk, "PING", "ping")
+	rets = 0
+	while true do
+		if(rets == 5) then break end
+		while true do
+			sender, message, protocol = rednet.receive(1)
+			if(protocol ~= "ping") then
+				rets = rets + 1
+				break --continue
+			end
+			if(tonumber(message) ~= 5) then
+				rets = rets + 1
+				break --continue
+			end
+			if(tonumber(sender) ~= tonumber(wrk)) then
+				rets = rets + 1
+				break --continue
+			end
+			if(tonumber(message) ~= 0 and tonumber(message) ~= nil and message ~= nil and tonumber(sender) ~= 0 and sender ~= nil and tonumber(sender) ~= nil  )then
+				return 1
+			end
+			rets = rets + 1
+			break --continue
+		end
+	end
+end
+
 print("Initializing storage manager...")
 print("Loading worker nodes...")
 dofile("/store-clients")
@@ -99,3 +127,16 @@ if(#workers < 1) then
 	print("[FATAL ERROR] No workers!")
 	exit(4)
 end
+print("Done resolving DNS records.")
+print("Attempting communication with workers...")
+for k,v in pairs(workers) do
+	if(pingWorker(v) == 0)then
+		print("WORKER #", k, "(", v, ")"  " DID NOT REPLY. Ignoring.")
+		workers.remove(k)
+	end
+end
+if(#workers < 1) then
+	print("[FATAL ERROR] No workers!")
+	exit(5)
+end
+print("Done!")
