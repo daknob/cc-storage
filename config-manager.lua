@@ -6,4 +6,5 @@ rednet.open("bottom")
 
 --[ Variables ]--
 DNSIP = 127 --Set to 0 for autodiscovery--
-FQDN = "storage.csd.gr"
+FQDN = "storage.csd.gr" -- The current host FQDN --
+copies = 3 -- Amount of copies to keep of each file -- 

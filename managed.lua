@@ -96,6 +96,23 @@ function pingWorker(wrk)
 	end
 end
 
+function getWorkerAvailable(wrk)
+	rednet.send(wrk, "GET-AVAILABLE-STORAGE", "strs")
+	while true do
+		while true do
+			rednet.send(wrk, "GET-AVAILABLE-STORAGE", "strs")
+			sender,message,proto = rednet.receive()
+			if(proto ~= "strs") then
+				break --continue
+			end	
+			if(tonumber(message) < 0 ) then
+				break --continue
+			end
+			return tonumber(message)
+		end
+	end
+end
+
 print("Initializing storage manager...")
 print("Loading worker nodes...")
 dofile("/store-clients")
@@ -140,3 +157,13 @@ if(#workers < 1) then
 	exit(5)
 end
 print("Done!")
+print("Getting total available storage space...")
+totalSize = 0
+workstore = {}
+for k,v in pairs(workers) do
+	f = getWorkerAvailable(v)
+	totalSize = totalSize + f
+	workstore.insert(f)
+end
+print("Done! Total size available for files: ", (totalSize / copies))
+
